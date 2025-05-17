@@ -2,7 +2,7 @@ const Goal = require('../schema/goalSchema');
 
 
 
-async function createGoal(goalDetails) {
+async function addGoal(goalDetails) {
     try {
         const response = await Goal.create(goalDetails);
         return response;
@@ -14,5 +14,5 @@ async function createGoal(goalDetails) {
 
 module.exports = {
     
-    createGoal
+    addGoal
 };

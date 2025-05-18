@@ -1,11 +1,11 @@
 
-const Goal = require('../schema/goalSchema');
+const Roadmap = require('../schema/roadmapSchema');
 
 
 
-async function addGoal(goalDetails) {
+async function roadmapSave(roadmapDetails) {
     try {
-        const response = await Goal.create(goalDetails);
+        const response = await Roadmap.create(roadmapDetails);
         return response;
     } catch(error){
         console.log(error)
@@ -25,5 +25,5 @@ async function deleteGoal(goalID){
 
 module.exports = {
     
-    addGoal,deleteGoal
+    roadmapSave,deleteGoal
 };

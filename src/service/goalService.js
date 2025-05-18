@@ -1,4 +1,9 @@
-const {addGoal}=require('../repository/goalRepository')
+const {addGoal,deleteGoal}=require('../repository/goalRepository')
+
+async function findGoal(goalID){
+    const response= await deleteGoal(goalID)
+    return response
+}
 
 async function createGoal(goalDetails){
     const newGoal= await addGoal({
@@ -16,5 +21,5 @@ async function createGoal(goalDetails){
 }
 
 module.exports={
-    createGoal
+    createGoal,findGoal
 }

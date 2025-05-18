@@ -1,11 +1,11 @@
-const { createGoal } = require("../service/goalService");
+const { createGoal,findGoal } = require("../service/goalService");
 
 async function goalAdd(req, res) {
     try {
-        // Assume user is authenticated by middleware and req.user is set
+        
         const goalData = {
             ...req.body,
-            userId: req.user.id  // req.user is set in isLoggedIn middleware
+            userId: req.user.id  
         };
 
         const response = await createGoal(goalData);
@@ -27,6 +27,33 @@ async function goalAdd(req, res) {
     }
 }
 
+async function goalDelete(req, res) {
+    try {
+        const response = await findGoal(req.params.id);
+        return res.status(200).json({
+            success: true,
+            message: 'Successfully deleted the goal',
+            error: {},
+            data: response
+        })
+    } catch (error) {
+        if(error instanceof AppError) {
+            return res.status(error.statusCode).json({
+                success: false,
+                message: error.message,
+                data: {},
+                error: error
+            });
+        }
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            data: {},
+            error: error
+        });
+    }
+}
 module.exports = {
-    goalAdd
+    goalAdd,goalDelete
 }

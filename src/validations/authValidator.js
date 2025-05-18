@@ -22,7 +22,7 @@ async function isLoggedIn(req, res, next) {
         if(!decoded) {
             throw new UnAuthorisedError();
         }
-        // if reached here, then user is authenticated allow them to access the api
+        
 
         req.user = {
             email: decoded.email,

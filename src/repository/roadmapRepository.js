@@ -1,5 +1,15 @@
 
+const { response } = require('express');
 const Roadmap = require('../schema/roadmapSchema');
+
+async function roadmapFind(id){
+    try{
+       const roadmap=await Roadmap.findById(id);
+        return roadmap;
+    }catch(error){
+        console.log(error)
+    }
+}
 
 
 
@@ -13,17 +23,7 @@ async function roadmapSave(roadmapDetails) {
     
 }
 
-async function deleteGoal(goalID){
-    try{
-        const response= await Goal.findByIdAndDelete(goalID)
-        return response
-    }
-    catch(error){
-        console.log(error)
-    }
-}
 
-module.exports = {
-    
-    roadmapSave,deleteGoal
-};
+
+module.exports={
+    roadmapSave,roadmapFind}

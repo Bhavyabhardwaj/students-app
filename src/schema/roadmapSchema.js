@@ -5,7 +5,7 @@ const roadmapSchema= new mongoose.Schema({
     },
     roadmapName:{
         type:String,
-        required:true
+      
         
     }
 })

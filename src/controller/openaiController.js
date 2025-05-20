@@ -5,7 +5,7 @@ const generateRoadmap = async (req, res) => {
   const { topic } = req.body;
 
   try {
-    const response = await axios.post(
+      const  response = await axios.post(
       'https://api.groq.com/openai/v1/chat/completions',
       {
         model: 'llama3-70b-8192', 
@@ -25,7 +25,7 @@ const generateRoadmap = async (req, res) => {
       }
     );
 
-    const roadmap = response.data.choices[0].message.content;
+    roadmap = response.data.choices[0].message.content;
     res.status(200).json({ roadmap });
     
   } catch (error) {

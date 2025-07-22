@@ -6,6 +6,7 @@ const authRouter=require('./routes/authRoute')
 const cookieParser = require('cookie-parser')
 const goalRouter = require('./routes/goalRoute')
 const openaiRouter=require('./routes/openaiRoute')
+const contentRouter=require('./routes/contentSuggestionRouter')
 const app = express()
 
 const cors = require('cors');
@@ -25,6 +26,7 @@ app.use('/users',userRouter)
 app.use('/auth', authRouter);
 app.use('/goal', goalRouter);
 app.use('/roadmap', openaiRouter);
+app.use('/content', contentRouter);
 
 app.get('/hi',(req,res)=>{
     return res.json({message:'hello'})

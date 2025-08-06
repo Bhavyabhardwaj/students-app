@@ -23,6 +23,7 @@ async function deleteGoal(goalID){
     }
 }
 
+
 module.exports = {
     
     addGoal,deleteGoal

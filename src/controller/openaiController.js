@@ -2,7 +2,7 @@ const axios = require('axios');
 let roadmap = "";
 
 const generateRoadmap = async (req, res) => {
-  const { topic } = req.body;
+  const { topic,deadline} = req.body;
 
   try {
       const  response = await axios.post(

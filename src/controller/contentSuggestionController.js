@@ -2,10 +2,8 @@ const { generateSuggestionForGoal } = require('../service/contentSuggestionServi
 
 const getSuggestionFromGoalId = async (req, res) => {
     try {
-        const goalId = req.params.goalId;
-        const userId = req.user.id;
-
-        const suggestion = await generateSuggestionForGoal(goalId, userId);
+        const goal=req.body.goal
+        const suggestion = await generateSuggestionForGoal(goal);
 
         return res.status(201).json({
             success: true,

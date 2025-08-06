@@ -3,16 +3,12 @@ const Goal = require('../schema/goalSchema');
 const ContentSuggestion = require('../schema/contentSuggestionSchema');
 const { saveSuggestion } = require('../repository/contentSuggestionRepository');
 
-async function generateSuggestionForGoal(goalId, userId) {
+async function generateSuggestionForGoal(goal) {
     try {
-        // 1. Fetch goal
-        const goalDoc = await Goal.findById(goalId);
+       
+       
 
-        if (!goalDoc) {
-            throw { reason: "Goal not found", statusCode: 404 };
-        }
-
-        const goalText = goalDoc.goal;
+        const goalText =goal;
 
         // 2. Call AI API
         const response = await axios.post(
@@ -22,12 +18,7 @@ async function generateSuggestionForGoal(goalId, userId) {
                 messages: [
                     {
                         role: 'user',
-                        content: `Suggest best curated learning resources for this goal: "${goalText}". 
-Include:
-- Top YouTube videos (title + channel)
-- Practice platforms
-- Useful websites or tools
-- Study structure or tips.`,
+                        content: `bhai iss goal k liye you tube videos k link bhej do  : "${goal}". `,
                     },
                 ],
                 temperature: 0.7,
@@ -42,19 +33,11 @@ Include:
 
         const suggestionText = response.data.choices[0].message.content;
 
-        // 3. Save to DB
-        const saved = await saveSuggestion({
-            goal: goalId,
-            user: userId,
-            suggestionText
-        });
+        
 
-        // 4. Refetch full document to ensure populated fields
-        const fullSuggestion = await ContentSuggestion.findById(saved._id)
-            .populate('goal', 'goal category deadline')  // optional: populate goal details
-            .populate('user', 'name email');             // optional: populate user info
+                
 
-        return fullSuggestion;
+        return suggestionText;
 
     } catch (error) {
         console.error('Suggestion Error:', error.response?.data || error.message);

@@ -1,4 +1,4 @@
-const { createGoal,findGoal } = require("../service/goalService");
+const { createGoal,findGoal, showAllGoals } = require("../service/goalService");
 
 async function goalAdd(req, res) {
     try {
@@ -54,6 +54,28 @@ async function goalDelete(req, res) {
         });
     }
 }
+
+async function showGoals(req, res) {
+    try {
+        const response = await showAllGoals(req.user.id);
+
+        return res.status(200).json({
+            message: 'Successfully fetched the goals',
+            success: true,
+            data: response,
+            error: {}
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(error.statusCode || 500).json({
+            success: false,
+            message: error.reason || "Something went wrong",
+            data: {},
+            error: error
+        });
+    }
+}
+
 module.exports = {
-    goalAdd,goalDelete
+    goalAdd,goalDelete,showGoals
 }

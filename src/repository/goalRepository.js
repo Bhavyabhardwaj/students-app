@@ -22,9 +22,17 @@ async function deleteGoal(goalID){
         console.log(error)
     }
 }
-
+async function findAllGoals(userId){
+    try{
+        const response = await Goal.find({ user: userId });
+        return response;
+    }
+    catch(error){
+        console.log(error)
+    }
+}
 
 module.exports = {
     
-    addGoal,deleteGoal
+    addGoal,deleteGoal,findAllGoals
 };

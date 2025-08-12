@@ -1,4 +1,4 @@
-const {SavingRoadmap, findRoadmapById} = require("../service/roadmap");
+const {SavingRoadmap, findRoadmapById, findRoadmaps} = require("../service/roadmap");
 const { roadmap } = require("./openaiController");
 
 async function saveRoadmap(req, res) {
@@ -31,8 +31,21 @@ async function findRoadmap(req, res) {
         console.log(error)
     }
 }
+async function showAllRoadmaps(req,res) {
+    try {
+        const response = await findRoadmaps();
+        return res.status(200).json({
+            success: true,
+            message: 'Successfully fetched the roadmaps',
+            error: {},
+            data: response
+        })
+    } catch (error){
+        console.log(error)
+    }
+}
 
 
 module.exports = {
-    saveRoadmap,findRoadmap
+    saveRoadmap,findRoadmap,showAllRoadmaps
 }

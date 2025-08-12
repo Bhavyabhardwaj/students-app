@@ -1,4 +1,4 @@
-const {addGoal,deleteGoal}=require('../repository/goalRepository')
+const {addGoal,deleteGoal, findAllGoals}=require('../repository/goalRepository')
 
 async function findGoal(goalID){
     const response= await deleteGoal(goalID)
@@ -6,20 +6,24 @@ async function findGoal(goalID){
 }
 
 async function createGoal(goalDetails){
-    const newGoal= await addGoal({
-        goal : goalDetails.goal,
+    const newGoal = await addGoal({
+        user: goalDetails.userId, 
+        goal: goalDetails.goal,
         category: goalDetails.category,
         deadline: goalDetails.deadline
-
-
-    })
-    if(!newGoal){
-        throw({reason: "goal not Added" ,statusCode:501})
-        
+    });
+    if (!newGoal) {
+        throw({ reason: "goal not Added", statusCode: 501 });
     }
     return newGoal;
 }
 
+async function showAllGoals(userId){
+    const response = await findAllGoals(userId);
+    return response;
+}
+
+
 module.exports={
-    createGoal,findGoal
+    createGoal,findGoal,showAllGoals
 }

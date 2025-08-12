@@ -1,13 +1,12 @@
-const {roadmapSave} = require('../repository/roadmapRepository');
-const {roadmapFind}=require('../repository/roadmapRepository')
+const { roadmapSave, findAllRoadmaps, deleteById } = require('../repository/roadmapRepository');
+const { roadmapFind } = require('../repository/roadmapRepository');
 
-
-async function findRoadmapById(id){
-    const myRoadmap=await roadmapFind(id)
-    if(!myRoadmap){
-        throw{reason:"roadmap not found",statusCode:401}
+async function findRoadmapById(id) {
+    const myRoadmap = await roadmapFind(id);
+    if (!myRoadmap) {
+        throw { reason: "Roadmap not found", statusCode: 401 };
     }
-    return  myRoadmap;
+    return myRoadmap;
 }
 
 async function SavingRoadmap(roadmapDetails) {
@@ -20,6 +19,27 @@ async function SavingRoadmap(roadmapDetails) {
     return newRoadmap;
 }
 
+async function getUserRoadmaps(userId) {
+    try {
+        const roadmaps = await findAllRoadmaps(userId);
+        return roadmaps;
+    } catch (error) {
+        console.log("Error in roadmapService -> getUserRoadmaps:", error);
+        throw error;
+    }
+}
+
+async function deleteRoadmapById(id) {
+    const deleted = await deleteById(id);
+    if (!deleted) {
+        throw { reason: "Roadmap not found or already deleted", statusCode: 404 };
+    }
+    return deleted;
+}
+
 module.exports = {
-    SavingRoadmap,findRoadmapById
+    SavingRoadmap,
+    findRoadmapById,
+    getUserRoadmaps,
+    deleteRoadmapById
 };

@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET, COOKIE_SECURE } = require('../config/serverConfig');
+const { JWT_SECRET, COOKIE_SECURE} = require('../config/serverConfig');
+
 
 async function isLoggedIn(req, res, next) {
+    
     const token = req.cookies["authToken"];
-    console.log(`token: ${token}`);
-
-    if (!token) {
+    console.log(token);
+    if(!token) {
         return res.status(401).json({
             success: false,
             data: {},
@@ -18,45 +19,45 @@ async function isLoggedIn(req, res, next) {
         const decoded = jwt.verify(token, JWT_SECRET);
         console.log(decoded, decoded.exp, Date.now() / 1000);
 
-        if (!decoded) {
-            throw new Error("Unauthorized");
+        if(!decoded) {
+            throw new UnAuthorisedError();
         }
+        
 
         req.user = {
             email: decoded.email,
-            id: decoded.id
-        };
+            id: decoded.id,
+           
+        }
 
         next();
     } catch (error) {
         console.log(error.name);
-
-        if (error.name === "TokenExpiredError") {
-            // Clear cookie properly for cross-origin
+        if(error.name === "TokenExpiredError") {
             res.cookie("authToken", "", {
                 httpOnly: true,
-                sameSite: "None",  // Important for cross-origin
-                secure: COOKIE_SECURE === 'true', // HTTPS only in production
-                maxAge: 0 // expire immediately
+                sameSite: "lax",
+                secure: COOKIE_SECURE,
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+               
             });
-
             return res.status(200).json({
                 success: true,
-                message: "Logged out due to expired token",
+                message: "Log out successfull",
                 error: {},
                 data: {}
             });
         }
-
         return res.status(401).json({
             success: false,
             data: {},
-            error: error.message || error,
+            error: error,
             message: "Invalid Token provided"
         });
     }
 }
 
+
 module.exports = {
     isLoggedIn
-};
+}

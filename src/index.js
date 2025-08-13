@@ -11,10 +11,16 @@ const app = express()
 
 const cors = require('cors');
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL 
+];
+
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: allowedOrigins,
     credentials: true
 }));
+
 
 
 app.use(cookieParser())

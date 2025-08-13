@@ -13,7 +13,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
     'http://localhost:5173',
-    serverConfig.FRONTEND_URL  
+    'https://pathvibe.vercel.app' 
 ];
 
 app.use(cors({

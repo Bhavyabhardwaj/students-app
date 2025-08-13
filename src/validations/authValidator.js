@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET, COOKIE_SECURE } = require('../config/serverConfig');
+const { JWT_SECRET, COOKIE_SECURE} = require('../config/serverConfig');
+
 
 async function isLoggedIn(req, res, next) {
-    // Frontend se aayi hui cookie 'authToken' ko read karo
+    
     const token = req.cookies["authToken"];
-    console.log('Received token:', token);
-
-    if (!token) {
+    console.log(token);
+    if(!token) {
         return res.status(401).json({
             success: false,
             data: {},
@@ -16,50 +16,48 @@ async function isLoggedIn(req, res, next) {
     }
 
     try {
-        // Token verify karo
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log('Decoded token:', decoded, 'Exp:', decoded.exp, 'Now:', Date.now() / 1000);
+        console.log(decoded, decoded.exp, Date.now() / 1000);
 
-        if (!decoded) {
-            throw new Error("Unauthorized");
+        if(!decoded) {
+            throw new UnAuthorisedError();
         }
+        
 
-        // User info request object me daal do
         req.user = {
             email: decoded.email,
             id: decoded.id,
-        };
+           
+        }
 
         next();
     } catch (error) {
-        console.log('Auth error:', error.name);
-
-        if (error.name === "TokenExpiredError") {
-            // Token expire ho gaya toh cookie clean karo with correct flags
+        console.log(error.name);
+        if(error.name === "TokenExpiredError") {
             res.cookie("authToken", "", {
                 httpOnly: true,
-                sameSite: "none",      // cross-site cookie ke liye none lagana zaroori hai
-                secure: true,          // https me secure true rakhna
-                maxAge: 0              // cookie expire kar do
+                sameSite: "lax",
+                secure: COOKIE_SECURE,
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+               
             });
-
-            return res.status(401).json({
-                success: false,
-                message: "Token expired. Please login again.",
+            return res.status(200).json({
+                success: true,
+                message: "Log out successfull",
                 error: {},
                 data: {}
             });
         }
-
         return res.status(401).json({
             success: false,
             data: {},
-            error: error.message || error,
+            error: error,
             message: "Invalid Token provided"
         });
     }
 }
 
+
 module.exports = {
     isLoggedIn
-};
+}

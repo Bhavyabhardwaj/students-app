@@ -13,7 +13,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
     'http://localhost:5173',
-    process.env.FRONTEND_URL  
+    serverConfig.FRONTEND_URL  
 ];
 
 app.use(cors({

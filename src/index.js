@@ -12,8 +12,9 @@ const app = express()
 const cors = require('cors');
 
 
+
 app.use(cors({
-    origin: 'http://localhost:5173',// allow to server to accept request from different origin
+    origin:'https://pathvibe.vercel.app/'  , //'http://localhost:5173',// allow to server to accept request from different origin
     credentials: true, // allow session cookie from browser to pass through
 }));
 

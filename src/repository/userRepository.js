@@ -20,8 +20,12 @@ async function createUser(userDetails) {
     }
     
 }
+async function getUserById(id){
+  return await User.findById(id).select("-password");
+};
+
 
 module.exports = {
     findUser,
-    createUser
+    createUser,getUserById
 };

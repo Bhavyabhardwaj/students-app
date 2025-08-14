@@ -1,4 +1,4 @@
-const { registerUser } = require("../service/userservice");
+const { registerUser,getUserProfileService  } = require("../service/userservice");
 
 
 async function createUser(req, res) {
@@ -23,6 +23,24 @@ async function createUser(req, res) {
    
 }
 
+
+
+async function getUserProfileController(req, res){
+  try {
+    const user = await getUserProfileService(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error in getUserProfileController:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+
 module.exports = {
-    createUser
+    createUser,getUserProfileController
 }

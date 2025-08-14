@@ -1,4 +1,4 @@
-const { COOKIE_SECURE } = require("../config/serverConfig");
+const { COOKIE_SECURE, FRONTEND_URL } = require("../config/serverConfig");
 const { loginUser } = require("../service/authService");
 
 async function logout(req, res) {
@@ -6,9 +6,10 @@ async function logout(req, res) {
 
     res.cookie("authToken", "", {
         httpOnly: true,
-        secure: COOKIE_SECURE,       // true in prod, false in local
-        sameSite: "None",            // important for cross-origin
-        expires: new Date(0)         // clear immediately
+        secure: COOKIE_SECURE,
+        sameSite: "lax",
+        maxAge: 0, 
+      
     });
 
     return res.status(200).json({
@@ -24,10 +25,12 @@ async function login(req, res) {
         const loginPayload = req.body;
         const response = await loginUser(loginPayload);
 
+        
         res.cookie("authToken", response.token, {
             httpOnly: true,
-            secure: COOKIE_SECURE,    // true in prod, false in local
-            sameSite: "None",          // important for cross-origin
+            secure: COOKIE_SECURE,
+            sameSite: "lax",
+            
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
@@ -36,10 +39,12 @@ async function login(req, res) {
             message: 'Logged in successfully',
             data: {
                 userRole: response.userRole,
-                userData: response.userData
+                userData: response.userData,
+                token: response.token 
             },
             error: {}
         });
+        
 
     } catch (error) {
         return res.status(error.statusCode || 500).json({

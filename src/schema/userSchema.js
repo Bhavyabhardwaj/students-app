@@ -43,6 +43,12 @@ const userSchema = new mongoose.Schema({
     },
     address: {
         type: String
+    },
+    profession:{
+        type:String
+    },
+    skills:{
+        type:String
     }
 }, {
     timestamps: true

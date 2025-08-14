@@ -1,4 +1,4 @@
-const {createUser,findUser}= require('../repository/userRepository')
+const {createUser,findUser,getUserById}= require('../repository/userRepository')
 
 async function registerUser(userDetails){
 
@@ -18,7 +18,10 @@ const newUser = await createUser({
     password: userDetails.password,
     firstName: userDetails.firstName,
     lastName: userDetails.lastName,
-    contactNumber: userDetails.mobileNumber
+    contactNumber: userDetails.mobileNumber,
+    skills:userDetails.skills,
+    profession:userDetails.profession
+
 
 });
 
@@ -30,6 +33,13 @@ if(!newUser){
 return newUser;
 }
 
+async function getUserProfileService(userId){
+  const user = await getUserById(userId);
+  return user;
+};
+
+
+
 module.exports={
-    registerUser
+    registerUser,getUserProfileService
 }

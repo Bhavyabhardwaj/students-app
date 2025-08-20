@@ -3,17 +3,18 @@ const mongoose = require('mongoose');
 const contentSuggestionSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',     // ✅ IMPORTANT
+        ref: 'User',     
         required: true
     },
     goal: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Goal',
-        required: true
+        type:String
     },
     suggestionText: {
-        type: String,
-        required: true
+        type: String
+       
+    },
+    contentName:{
+        type:String
     },
     createdAt: {
         type: Date,

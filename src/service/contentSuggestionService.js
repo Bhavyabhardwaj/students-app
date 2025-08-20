@@ -1,50 +1,134 @@
-const axios = require('axios');
-const Goal = require('../schema/goalSchema');
-const ContentSuggestion = require('../schema/contentSuggestionSchema');
-const { saveSuggestion } = require('../repository/contentSuggestionRepository');
+// const axios = require('axios');
+// const Goal = require('../schema/goalSchema');
+// const Content=require('../schema/contentSuggestionSchema')
+// let suggestionText="";
 
-async function generateSuggestionForGoal(goal) {
-    try {
+//  const{SavingContent,
+//     findContentById,
+//     getUserContents,
+//     deleteContentById}=require('./contwntSuggService2')
+
+// async function generateSuggestionForGoal(goal) {
+//     try {
        
        
 
-        const goalText =goal;
+//         const goalText =goal;
 
-        // 2. Call AI API
-        const response = await axios.post(
-            'https://api.groq.com/openai/v1/chat/completions',
-            {
-                model: 'llama3-70b-8192',
-                messages: [
-                    {
-                        role: 'user',
-                        content: `bhai iss goal k liye you tube videos k link bhej do  : "${goal}". `,
-                    },
-                ],
-                temperature: 0.7,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+       
+//         const response = await axios.post(
+//             'https://api.groq.com/openai/v1/chat/completions',
+//             {
+//                 model: 'llama3-70b-8192',
+//                 messages: [
+//                     {
+//                         role: 'user',
+//                         content: `bhai iss goal k liye you tube videos k link or websites k link bhej do : "${goal}". `,
+//                     },
+//                 ],
+//                 temperature: 0.7,
+//             },
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${process.env.API_KEY}`,
+//                     'Content-Type': 'application/json',
+//                 },
+//             }
+//         );
 
-        const suggestionText = response.data.choices[0].message.content;
+//          suggestionText = response.data.choices[0].message.content;
+       
+        
+//          return suggestionText;
 
+//     } catch (error) {
+//         console.error('Suggestion Error:', error.response?.data || error.message);
+//         throw { reason: "Failed to generate suggestion", statusCode: 500 };
+//     }
+// }
+
+
+
+// const savecontent = async (req, res) => {
+//     try {
+//         const userId = req.user._id; 
+
+//         if (!suggestionText) {
+//             return res.status(400).json({ message: 'No content to save. Please generate first.' });
+//         }
+
+//         const newContent = new Content({
+//             user: req.user.id,
+//             content: suggestionText,
+//             goalName: req.body.goalName,
+//             contentName: req.body.contentName,
+//             deadline: req.body.deadline
+//         });
+
+//         await newContent.save();
+
+//         res.status(201).json({
+//             message: 'Content saved successfully',
+//             content: newContent
+//         });
+
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error saving content', error: error.message });
+//     }
+// };
+
+// async function getUserContentsController(req, res) {
+//     try {
+//         const userId = req.user.id; 
+//         const contents = await getUserContents(userId);
+//         return res.status(200).json({
+//             success: true,
+//             data: contents,
+//             contentName: contents.contentName
+//         });
+//     } catch (error) {
+//         console.log("Error in contentController -> getUserContentsController:", error);
+//         return res.status(500).json({
+//             success: false,
+//             message: "Server error"
+//         });
+//     }
+// }
+
+// async function findContent(req, res) {
+//     try {
+//         const response = await findContentById(req.params.id);
+//         return res.status(200).json({
+//             success: true,
+//             message: 'Successfully fetched the content',
+//             error: {},
+//             data: response
+//         });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// // Delete Roadmap
+// async function deleteContent(req, res) {
+//     try {
+//         const deleted = await deleteContentById(req.params.id);
+//         return res.status(200).json({
+//             success: true,
+//             message: 'Content deleted successfully',
+//             data: deleted
+//         });
+//     } catch (error) {
+//         console.log("Error in contentController -> deleteContent:", error);
+//         return res.status(error.statusCode || 500).json({
+//             success: false,
+//             message: error.reason || 'Server error'
+//         });
+//     }
+// }
         
 
-                
-
-        return suggestionText;
-
-    } catch (error) {
-        console.error('Suggestion Error:', error.response?.data || error.message);
-        throw { reason: "Failed to generate suggestion", statusCode: 500 };
-    }
-}
-
-module.exports = {
-    generateSuggestionForGoal
-};
+// module.exports = {
+//     generateSuggestionForGoal,
+//     deleteContent,findContent,getUserContentsController,savecontent
+// };

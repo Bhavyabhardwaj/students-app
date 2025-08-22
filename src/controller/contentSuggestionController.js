@@ -40,7 +40,16 @@ const generateContent = async (req, res) => {
                 messages: [
                     {
                         role: 'user',
-                        content: `bhai iss goal k liye you tube videos k link or websites k link bhej do : "${goal}".`,
+                        content: `For the goal: "${goal}", provide a list of YouTube video links and website links that will help in learning this topic. 
+Ensure that every video entry includes:
+1. The video title
+2. The channel/author name
+3. The duration (if available)
+4. The direct clickable YouTube link
+
+Also, provide at least 2 website links (blogs, documentation, tutorials) with proper titles and clickable links.
+Format the response in a clean and readable way using markdown (with bullet points or numbered lists).
+`,
                     },
                 ],
                 temperature: 0.7,

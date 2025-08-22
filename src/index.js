@@ -13,7 +13,7 @@ const cors = require('cors');
 
 
 app.use(cors({
-  origin: "https://pathvibe.vercel.app",
+  origin: "https://student-app-frontend-crl0.onrender.com",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true

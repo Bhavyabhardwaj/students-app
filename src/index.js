@@ -13,8 +13,10 @@ const cors = require('cors');
 
 
 app.use(cors({
-    origin: 'https://pathvibe.vercel.app',// allow to server to accept request from different origin
-    credentials: true, // allow session cookie from browser to pass through
+  origin: "https://pathvibe.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
 
 

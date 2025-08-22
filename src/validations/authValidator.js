@@ -38,6 +38,7 @@ async function isLoggedIn(req, res, next) {
                 httpOnly: true,
                 sameSite: "none",
                 secure: COOKIE_SECURE,
+                  domain: "pathvibe.onrender.com",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                
             });

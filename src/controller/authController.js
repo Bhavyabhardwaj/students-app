@@ -8,6 +8,7 @@ async function logout(req, res) {
         httpOnly: true,
         secure: COOKIE_SECURE,
         sameSite: "none",
+          domain: "pathvibe.onrender.com",
         maxAge: 0, 
       
     });
@@ -30,6 +31,7 @@ async function login(req, res) {
             httpOnly: true,
             secure: COOKIE_SECURE,
             sameSite: "none",
+              domain: "pathvibe.onrender.com",
             
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });

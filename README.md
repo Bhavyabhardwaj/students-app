@@ -1,9 +1,6 @@
 # 📚 AI-Powered Learning Assistant
 
-Your personalized AI-based learning assistant — build goals, get AI-generated roadmaps, track your progress, and access curated resources — all in one place.
-
-🚀 Live Demo: [https://your-learning-app.vercel.app](https://your-learning-app.vercel.app)  
-🛠️ Backend API: [https://your-api-url.com](https://your-api-url.com)
+Your personalized AI-based learning assistant — build goals, get AI-generated roadmaps, track your progress, and access curated resources — all in one
 
 ---
 

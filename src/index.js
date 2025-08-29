@@ -13,10 +13,8 @@ const cors = require('cors');
 
 
 app.use(cors({
-  origin: "https://student-app-frontend-crl0.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+    origin: 'http://localhost:5173',// allow to server to accept request from different origin
+    credentials: true, // allow session cookie from browser to pass through
 }));
 
 

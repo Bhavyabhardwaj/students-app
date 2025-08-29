@@ -29,6 +29,17 @@ async function getUserContents(userId) {
     }
 }
 
+async function getRoadmapContent(roadmapId){
+    try{
+        const content=await findAllContents(roadmapId);
+        return content;
+    }
+    catch(error){
+        console.log("error in contentservice->getRoadmapContent",error);
+        throw error;
+    }
+}
+
 async function deleteContentById(id) {
     const deleted = await deleteById(id);
     if (!deleted) {
@@ -41,5 +52,6 @@ module.exports = {
     SavingContent,
     findContentById,
     getUserContents,
-    deleteContentById
+    deleteContentById,
+    getRoadmapContent
 };

@@ -6,6 +6,11 @@ const contentSuggestionSchema = new mongoose.Schema({
         ref: 'User',     
         required: true
     },
+    roadmap:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Roadmap'
+
+    },
     goal: {
         type:String
     },

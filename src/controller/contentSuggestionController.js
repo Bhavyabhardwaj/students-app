@@ -4,6 +4,7 @@ const Content=require('../schema/contentSuggestionSchema')
     findContentById,
     getUserContents,
     deleteContentById}=require('../service/contwntSuggService2')
+    const {findRoadmapById}=require('../service/roadmap')
     const axios=require('axios')
 // const getSuggestionFromGoal= async (req, res) => {
 //     try {
@@ -148,6 +149,57 @@ async function deleteContent(req, res) {
         });
     }
 }
+
+
+//content according to roadmap
+const generateRoadmapContent = async (req, res) => {
+
+   
+     const response = await findRoadmapById(req.params.id);
+     const content=response.content
+    
+    const { moduleNo,day} = req.body;
+    
+  
+
+    try {
+        const response = await axios.post(
+            'https://api.groq.com/openai/v1/chat/completions',
+            {
+                model: 'llama3-70b-8192',
+                messages: [
+                    {
+                        role: 'user',
+                        content: `For the topic in day ${day} in module number"${moduleNo}" in ${content}, provide a list of YouTube video links and website links that will help in learning this topic. 
+Ensure that every video entry includes:
+1. The video title
+2. The channel/author name
+3. The duration (if available)
+4. The direct clickable YouTube link
+
+Also, provide at least 2 website links (blogs, documentation, tutorials) with proper titles and clickable links.
+Format the response in a clean and readable way using markdown (with bullet points or numbered lists).
+`,
+                    },
+                ],
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${process.env.API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+          suggestionText = response.data.choices[0].message.content; 
+        res.status(200).json({suggestionText });
+
+    } catch (error) {
+        console.error('GROQ Error:', error.response?.data || error.message);
+        res.status(500).json({ error: 'GROQ API error occurred' });
+    }
+};
         
 
 
@@ -156,5 +208,5 @@ async function deleteContent(req, res) {
 
 
 module.exports = {
-   generateContent, deleteContent,findContent,getUserContentsController,savecontent
+   generateContent, deleteContent,findContent,getUserContentsController,savecontent,generateRoadmapContent
 };

@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config/serverConfig');
+const { JWT_SECRET, COOKIE_SECURE, FRONTEND_URL } = require('../config/serverConfig');
+
 
 async function isLoggedIn(req, res, next) {
-    
+    console.log("Inside isLoggedIn", req.cookies);
     const token = req.cookies["authToken"];
     console.log(token);
     if(!token) {
@@ -19,14 +20,14 @@ async function isLoggedIn(req, res, next) {
         console.log(decoded, decoded.exp, Date.now() / 1000);
 
         if(!decoded) {
-            throw new UnAuthorisedError();
+            console.log("error")
         }
-        
+        // if reached here, then user is authenticated allow them to access the api
 
         req.user = {
             email: decoded.email,
             id: decoded.id,
-           
+            role: decoded.role
         }
 
         next();
@@ -38,7 +39,7 @@ async function isLoggedIn(req, res, next) {
                 sameSite: "lax",
                 secure: COOKIE_SECURE,
                 maxAge: 7 * 24 * 60 * 60 * 1000,
-               
+                domain: FRONTEND_URL
             });
             return res.status(200).json({
                 success: true,
@@ -54,13 +55,10 @@ async function isLoggedIn(req, res, next) {
             message: "Invalid Token provided"
         });
     }
-    return res.status(401).json({
-      success: false,
-      message: "Invalid Token provided",
-      data: {},
-      error
-    });
-  }
+}
 
 
-module.exports = { isLoggedIn };
+
+module.exports = {
+    isLoggedIn
+}

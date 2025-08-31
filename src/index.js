@@ -15,7 +15,7 @@ const cors = require('cors');
 app.use(cors({
 
 
-    origin: 'https://student-app-frontend.vercel.app/',// allow to server to accept request from different origin
+    origin: 'https://student-app-frontend.vercel.app',// allow to server to accept request from different origin
     credentials: true, // allow session cookie from browser to pass through
 
 }));
